@@ -1,0 +1,9 @@
+{
+  "name": "porte_arduino",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "express": "^4.18.2",
+    "johnny-five": "^2.1.0"
+  }
+}

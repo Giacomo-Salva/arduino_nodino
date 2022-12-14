@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test comando 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container"><br>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+
+                        <div class="col"><h1 class="card-title">Comando</h1></div>
+
+                    </div>
+                </div>
+                <form class="card-body" action="/command1" method="post">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col"  style="text-align: right">
+                                <label class="form-label" for="relay">Relè</label>
+                            </div>
+                            <div class="col">
+                                <input class="form-range" type="range" id="relay" min="1" max="12" value="7" oninput="document.getElementById('relay-value').value = this.value">
+                            </div>
+                            <div class="col">
+                                <output id="relay-value" class="" for="relay">7</output>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+
+                            <div class="col" style="text-align: center"><input class="btn btn-primary " type="submit" value="invia comando"></div>
+
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

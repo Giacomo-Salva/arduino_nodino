@@ -9,53 +9,117 @@
 </head>
 
 <body>
-<div class="container"><br>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
+<header>
+    <div class="navbar navbar-dark bg-light box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center text-dark">
+                <strong>Arduino</strong>
+            </a>
+        </div>
+    </div>
+</header>
 
-                        <div class="col"><h1 class="card-title">Comando</h1></div>
-
+<main role="main">
+    <div class="container"><br>
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8"> <h2 class="card-title">Comando 1</h2></div>
+                            <div class="col"> <img class="float-end"  style="height: calc(1.325rem + .9vw); width: auto" data-src="" alt="Card image cap" src="https://cdn-icons-png.flaticon.com/512/59/59805.png"></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-1">
+                            <div class="col "><button id="open_1" type="button" class="btn btn-primary">Apri</button></div>
+                            <div class="col text-end"> <div class="btn-group"> <button id="edit_1" type="button" class="btn btn-outline-secondary">Modifica</button>
+                                <button id="del_1" type="button" class="btn btn-outline-danger">Elimina</button></div></div>
+                        </div>
                     </div>
                 </div>
-                <form class="card-body" action="/comando" method="post">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col"  style="text-align: right">
-                                <label class="form-label" for="relay">Relè</label>
-                            </div>
-                            <div class="col">
-                                <input class="form-range" type="range" name="relay" id="relay" min="1" max="8" value="7" oninput="val_update()">
-                            </div>
-                            <div class="col">
-                                <output id="relay-value" class="" for="relay">7</output>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-
-                            <div class="col" style="text-align: center"><input id="submit" class="btn btn-primary " type="submit" value="invia comando"></div>
-
-                        </div>
-
-                    </div>
-
-
-                </form>
             </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8"> <h2 class="card-title">Comando 2</h2></div>
+                            <div class="col"> <img class="float-end"  style="height: calc(1.325rem + .9vw); width: auto" data-src="" alt="Card image cap" src="https://cdn-icons-png.flaticon.com/512/59/59805.png"></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-1">
+                            <div class="col "><button type="button" class="btn btn-primary">Apri</button></div>
+                            <div class="col text-end"> <div class="btn-group"> <button type="button" class="btn btn-outline-secondary">Modifica</button>
+                                <button type="button" class="btn btn-outline-danger">Elimina</button></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8"> <h2 class="card-title">Comando 3</h2></div>
+                            <div class="col"> <img class="float-end"  style="height: calc(1.325rem + .9vw); width: auto" data-src="" alt="Card image cap" src="https://cdn-icons-png.flaticon.com/512/59/59805.png"></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-1">
+                            <div class="col "><button type="button" class="btn btn-primary">Apri</button></div>
+                            <div class="col text-end"> <div class="btn-group"> <button type="button" class="btn btn-outline-secondary">Modifica</button>
+                                <button type="button" class="btn btn-outline-danger">Elimina</button></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8"> <h2 class="card-title">Comando 4</h2></div>
+                            <div class="col"> <img class="float-end"  style="height: calc(1.325rem + .9vw); width: auto" data-src="" alt="Card image cap" src="https://cdn-icons-png.flaticon.com/512/59/59805.png"></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-1">
+                            <div class="col "><button type="button" class="btn btn-primary">Apri</button></div>
+                            <div class="col text-end"> <div class="btn-group"> <button type="button" class="btn btn-outline-secondary">Modifica</button>
+                                <button type="button" class="btn btn-outline-danger">Elimina</button></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h2 class="card-title">nuovo</h2>
+                    </div>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary col-12">+</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="col"></div>
     </div>
+</main>
 
 
-</div>
 
-<script type="text/javascript">function val_update () {
-    this.document.getElementById('relay-value').value = this.document.getElementById('relay').value;
-}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // your code here
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("main_script").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/index.js", true);
+        xhttp.send();
+    }, false);
 </script>
+<script type="text/javascript" id="main_script"></script>
 </body>
 </html>

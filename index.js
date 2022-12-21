@@ -7,6 +7,13 @@ function command(id) {
         relay : val
     };
 
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            document.getElementById("alert_container").innerHTML = this.responseText;
+            setTimeout(function () {document.getElementById("alert_container").innerHTML = "";}, 2000);
+        }
+    }
+
     xhttp.open("POST", "/comando", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(prova_json));
@@ -16,7 +23,7 @@ open_1.addEventListener("click", function () {
     command(this.id)
 });
 
-console.log("ready")
+console.log("ready");
 
 /*      GET request via AJAX -------------------------------------
 

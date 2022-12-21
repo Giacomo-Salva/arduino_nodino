@@ -9,16 +9,21 @@ app.use(bodyParser.json({strict: false}))
 const socket = io.connect('http://localhost:8080/arduino');
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '/index.html'));
+    res.sendFile(path.join(__dirname, '/client/index.html'));
 });
 app.get('/favicon.ico', function(req, res) {
-    res.sendFile(path.join(__dirname, '/assets/favicon.ico'));
+    res.sendFile(path.join(__dirname, '/client/assets/favicon.ico'));
 });
 app.get('/index.js', function(req, res) {
-    res.sendFile(path.join(__dirname, '/index.js'));
+    res.sendFile(path.join(__dirname, '/client/index.js'));
 });
-
-app.post('/comando', (req, res) => {
+app.get('/config', function(req, res) {
+    res.sendFile(path.join(__dirname, '/db/arduino_config.json'));
+});
+app.get('/card', function(req, res) {
+    res.sendFile(path.join(__dirname, '/response/command_card.html'));
+});
+app.post('/command', (req, res) => {
     const jsonReq = req.body;
     if (jsonReq.hasOwnProperty("relay") && typeof(jsonReq.relay) == "number"){
         console.log("received: " , jsonReq)

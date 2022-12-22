@@ -1,5 +1,66 @@
-const open_1 = document.getElementById("open_1");
+function openCommand(id) { //function called when command button is pressed and sends the relative command to the webserver
+    let xhrFun = new XMLHttpRequest();
+    if(id.split("_")[0] === "open"){
+        let data_json = {
+            relay : parseInt(id.split("_").pop().toString()) //get the number part from the id of the button clicked
+        };// create json with data to send
 
+        xhrFun.open("POST", "/command", true);
+        xhrFun.setRequestHeader("Content-type", "application/json");
+        xhrFun.send(JSON.stringify(data_json));
+        console.log("sent" + JSON.stringify(data_json))
+
+        xhrFun.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("alert_container").innerHTML = this.responseText;   // lets the user know if command was successfully sent
+                setTimeout(function () {document.getElementById("alert_container").innerHTML = "";}, 2000);
+            }
+        }
+    }
+}
+function editCommand(id) { //function called when command button is pressed and sends the relative command to the webserver
+    let xhrFun = new XMLHttpRequest();
+    if(id.split("_")[0] === "open"){
+        let data_json = {
+            relay : parseInt(id.split("_").pop().toString()) //get the number part from the id of the button clicked
+        };// create json with data to send
+
+        xhrFun.open("POST", "/command", true);
+        xhrFun.setRequestHeader("Content-type", "application/json");
+        xhrFun.send(JSON.stringify(data_json));
+        console.log("sent" + JSON.stringify(data_json))
+
+        xhrFun.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("alert_container").innerHTML = this.responseText;   // lets the user know if command was successfully sent
+                setTimeout(function () {document.getElementById("alert_container").innerHTML = "";}, 2000);
+            }
+        }
+    }
+}
+function deleteCommand(id) { //function called when command button is pressed and sends the relative command to the webserver
+    let xhrFun = new XMLHttpRequest();
+    if(id.split("_")[0] === "open"){
+        let data_json = {
+            relay : parseInt(id.split("_").pop().toString()) //get the number part from the id of the button clicked
+        };// create json with data to send
+
+        xhrFun.open("POST", "/command", true);
+        xhrFun.setRequestHeader("Content-type", "application/json");
+        xhrFun.send(JSON.stringify(data_json));
+        console.log("sent" + JSON.stringify(data_json))
+
+        xhrFun.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("alert_container").innerHTML = this.responseText;   // lets the user know if command was successfully sent
+                setTimeout(function () {document.getElementById("alert_container").innerHTML = "";}, 2000);
+            }
+        }
+    }
+}
+
+
+let dev = [];
 let xhttp = new XMLHttpRequest();
 // Send a GET request to build the page
 xhttp.open("GET", '/config', true);
@@ -11,53 +72,43 @@ xhttp.onreadystatechange = function() { //wait for a response
         console.log(config_json);
         let new_command = document.getElementById('commands_container').innerHTML;
         document.getElementById('commands_container').innerHTML = "";
-        xhttp.open("GET", '/card', true);
-        xhttp.send();
 
+        xhttp.open("GET", '/card', true); // to get template
+        xhttp.send();
         xhttp.onreadystatechange = function (){
             if (this.readyState === 4 && this.status === 200){
+                let card_template = this.responseText
                 config_json.forEach(function (el){
-                    console.log(el)
-                    let card = this.responseText
-                    card.replace("__command_name__", el.name)
-                    card.replace("__command_icon__", el.icon)
-                    card.replace("__command_relay_id__", el.relay)
-                    card.replace("__command_relay_edit__", el.relay)
-                    card.replace("__command_relay_delete__", el.relay)
+                    let card = card_template
+                    card = card.replace("__command_name__", el.name)
+                    card = card.replace("__command_icon__", el.icon)
+                    card = card.replace("__command_relay_id__", "open_" + el.relay)
+                    card = card.replace("__command_relay_edit__", "edit_" + el.relay)
+                    card = card.replace("__command_relay_delete__", "delete_" + el.relay)
                     document.getElementById('commands_container').insertAdjacentHTML('beforeend',card);
+                    dev[el.id] = [document.getElementById("open_" + el.relay), document.getElementById("edit_" + el.relay),document.getElementById("delete_" + el.relay)];
                 });
                 document.getElementById('commands_container').insertAdjacentHTML('beforeend', new_command);
+
+                dev.forEach(function (el){
+                    el[0].addEventListener("click", function (){ openCommand(this.id) })
+                    el[1].addEventListener("click", function (){ editCommand(this.id) })
+                    el[2].addEventListener("click", function (){ deleteCommand(this.id) })
+                })
+                console.log("ready");
+
+
+
             }
 
         }
-
-        console.log("ready");
-
-        function command(id) { //function called when command button is pressed and sends the relative command to the webserver
-            let xhttp = new XMLHttpRequest();
-            let val = parseInt(id.split("_").pop().toString()); //get the number part from the id of the button clicked
-            let data_json = {
-                relay : val
-            };// create json with data to send
-
-            xhttp.open("POST", "/command", true);
-            xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.send(JSON.stringify(data_json));
-            console.log("sent" + JSON.stringify(data_json))
-
-            xhttp.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    document.getElementById("alert_container").innerHTML = this.responseText;   // lets the user know if command was successfully sent
-                    setTimeout(function () {document.getElementById("alert_container").innerHTML = "";}, 2000);
-                }
-            }
-        }
-        /*
-        open_1.addEventListener("click", function () {
-            command(this.id)
-        });*/
     }
 };
+
+/*
+
+ */
+
 
 /*      GET request via AJAX -------------------------------------
 

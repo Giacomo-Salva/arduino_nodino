@@ -2,6 +2,7 @@ function openCommand(id) { //function called when command button is pressed and 
     let xhrFun = new XMLHttpRequest();
     if(id.split("_")[0] === "open"){
         let data_json = {
+            action : "open",
             relay : parseInt(id.split("_").pop().toString()) //get the number part from the id of the button clicked
         };// create json with data to send
 
@@ -20,8 +21,9 @@ function openCommand(id) { //function called when command button is pressed and 
 }
 function editCommand(id) { //function called when command button is pressed and sends the relative command to the webserver
     let xhrFun = new XMLHttpRequest();
-    if(id.split("_")[0] === "open"){
+    if(id.split("_")[0] === "edit"){
         let data_json = {
+            action : "edit",
             relay : parseInt(id.split("_").pop().toString()) //get the number part from the id of the button clicked
         };// create json with data to send
 
@@ -40,8 +42,9 @@ function editCommand(id) { //function called when command button is pressed and 
 }
 function deleteCommand(id) { //function called when command button is pressed and sends the relative command to the webserver
     let xhrFun = new XMLHttpRequest();
-    if(id.split("_")[0] === "open"){
+    if(id.split("_")[0] === "delete"){
         let data_json = {
+            action : "delete",
             relay : parseInt(id.split("_").pop().toString()) //get the number part from the id of the button clicked
         };// create json with data to send
 
@@ -81,7 +84,7 @@ xhttp.onreadystatechange = function() { //wait for a response
                 config_json.forEach(function (el){
                     let card = card_template
                     card = card.replace("__command_name__", el.name)
-                    card = card.replace("__command_icon__", el.icon)
+                    card = card.replace("__command_icon__", "/assets/icons?icon=" + el.icon)
                     card = card.replace("__command_relay_id__", "open_" + el.relay)
                     card = card.replace("__command_relay_edit__", "edit_" + el.relay)
                     card = card.replace("__command_relay_delete__", "delete_" + el.relay)

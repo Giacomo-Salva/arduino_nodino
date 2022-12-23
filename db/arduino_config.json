@@ -3,30 +3,30 @@
     "id": 1,
     "name": "Primo comando",
     "relay": 1,
-    "icon": "icon_01.png"
+    "icon": "1"
   },
   {
     "id": 2,
     "name": "Comando cancello",
     "relay": 2,
-    "icon": "icon_01.png"
+    "icon": "2"
   },
   {
     "id": 3,
     "name": "Altro comando",
     "relay": 3,
-    "icon": "icon_01.png"
+    "icon": "3"
   },
   {
     "id": 4,
     "name": "Comandolino",
     "relay": 4,
-    "icon": "icon_01.png"
+    "icon": "4"
   },
   {
     "id": 5,
     "name": "Comandolone",
     "relay": 5,
-    "icon": "icon_01.png"
+    "icon": "5"
   }
 ]

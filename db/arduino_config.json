@@ -1,32 +1,26 @@
 [
   {
     "id": 1,
-    "name": "Primo comando",
+    "name": "Spogliatoi",
     "relay": 1,
     "icon": "1"
   },
   {
     "id": 2,
-    "name": "Comando cancello",
+    "name": "Ufficio",
     "relay": 2,
-    "icon": "2"
+    "icon": "6"
   },
   {
     "id": 3,
-    "name": "Altro comando",
+    "name": "Cancellino",
     "relay": 3,
-    "icon": "3"
+    "icon": "7"
   },
   {
     "id": 4,
-    "name": "Comandolino",
+    "name": "Carraio",
     "relay": 4,
     "icon": "4"
-  },
-  {
-    "id": 5,
-    "name": "Comandolone",
-    "relay": 5,
-    "icon": "5"
   }
 ]

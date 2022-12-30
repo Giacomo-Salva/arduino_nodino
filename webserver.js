@@ -2,11 +2,11 @@ const express = require('express');
 const path = require('path');
 const io = require("socket.io-client");
 const app = express();
-const port = 8081;
+const port = 8080;
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({strict: false}))
-const socket = io.connect('http://localhost:8080/arduino');
+const socket = io.connect('http://localhost:8181/arduino');
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/client/index.html'));

@@ -63,9 +63,7 @@ app.post('/command', (req, res) => {
                 let val = relay + 4;
                 socket.emit(`relay`,val);
                 console.log(`Sent: ${val}`, " = " + relay + " + offset(4)");
-                socket.on('success', () =>{
-                    res.sendFile(path.join(__dirname, '/response/open_success.html'));
-                })
+                res.sendFile(path.join(__dirname, '/response/open_success.html'));
             } else {
                 res.sendFile(path.join(__dirname, '/response/open_failure.html'))
             }

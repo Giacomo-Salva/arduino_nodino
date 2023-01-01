@@ -75,6 +75,9 @@ app.post('/command', (req, res) => {
     }
 });
 
+socket.on('keepalive_msg', () =>{
+    console.log("keepalive: ", new Date())
+})
 app.listen(port, function () {
     console.log('Server started at http://localhost:' + port);
 });

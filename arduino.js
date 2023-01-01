@@ -42,6 +42,11 @@ io.of('/arduino').on('connection', (socket) => {
             }
         });
     });
+    /*
+    board.on('disconnect', function (){
+        board = new five.Board()
+    });
+     */
 
     board.on('error', function(err) {
         console.log('ERROR FROM BOARD: ' + err);

@@ -9,15 +9,20 @@ const server = app.listen(8181, function() {
 });
 
 const io = require('socket.io')(server);
-
+const board = new five.Board();
 io.of('/arduino').on('connection', (socket) => {
 
     console.log('New connection: ' + socket.id);
 
     // OPENAI version
-    const board = new five.Board();
+
 
     board.on('ready', function() {
+        async function keepalive (){
+            socket.emit('keepalive_msg')
+            setTimeout(keepalive,10000)
+        } keepalive().then(() => {});
+
         const led = [];
         for (let i = 0; i <= 13; i++){ // all pins to 5v to prevent relay closing
             led[i] = new five.Led(i);
@@ -37,5 +42,10 @@ io.of('/arduino').on('connection', (socket) => {
             }
         });
     });
+
+    board.on('error', function(err) {
+        console.log('ERROR FROM BOARD: ' + err);
+    });
+
 });
 // Connect to the socket server

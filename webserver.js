@@ -55,15 +55,20 @@ app.get('/assets/icons',function(req, res) { //send various icons
 });
 app.post('/command', (req, res) => { //main function for sending commands to arduino.js
     const jsonReq = req.body; //gets the content of the request
+
     if (jsonReq.hasOwnProperty("relay") && typeof(jsonReq.relay) == "number" && jsonReq.hasOwnProperty("action")){ // check if request has the right content
+
         console.log("received: " , jsonReq) //show the content on server console
         const relay = jsonReq.relay;
+
         if (jsonReq.action === "open"){
             if(relay > 0 && relay < 9){
+
                 let val = relay + 4; //offset the value of relay to match the one on arduino board
                 socket.emit(`relay`,val); //send the relay and its number to arduino.js
                 console.log(`Sent: ${val}`, " = " + relay + " + offset(4)\n"); //show on server console what was sent to arduino
                 res.sendFile(path.join(__dirname, '/response/open_success.html')); //success msg if command was right
+
             } else {
                 res.sendFile(path.join(__dirname, '/response/open_failure.html')) //if relay number is not right, send error msg
             }
@@ -75,8 +80,8 @@ app.post('/command', (req, res) => { //main function for sending commands to ard
     }
 });
 
-socket.on('keepalive_msg', () =>{
-    console.log("keepalive: ", new Date()) //show the keepalive and the date at the time of reception
+socket.on('keepalive_msg', (msg) =>{
+    console.log("keepalive: ", msg) //show the keepalive and the date at the time of reception
 })
 app.listen(port, function () {
     console.log('Server started at http://192.168.1.252:' + port + "\n-----------------\n"); //tell we are ready!

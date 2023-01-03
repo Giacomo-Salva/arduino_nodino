@@ -15,7 +15,7 @@ async function successWaiting(timeLimit){
     });
     const ver = new Promise((resolve) => { //return true if state changed correctly, false otherwise
         socket.on('success', (msg) => {let log = msg; if (log.state_1 === false && log.state_2 === true) resolve(true); else resolve(false);
-            console.log(log.state_1 + ' ' + log.state_2 + ' : ' + (new Date(log.time_2).getTime() - new Date(log.time_1).getTime()) );
+            console.log(log.state_1 + ' -> ' + log.state_2 + ' : ' + (new Date(log.time_2).getTime() - new Date(log.time_1).getTime()) +'\n' );
         });
     });
     const response = await Promise.race([ver, timeoutPromise]);

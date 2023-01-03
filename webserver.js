@@ -82,6 +82,8 @@ app.post('/command', (req, res) => { //main function for sending commands to ard
 
 socket.on('keepalive_msg', (msg) =>{
     console.log("keepalive: ", msg) //show the keepalive and the date at the time of reception
+    msg = 'Response at ' + new Date.toLocaleString()
+    socket.emit('keepalive_res', msg)
 })
 app.listen(port, function () {
     console.log('Server started at http://192.168.1.252:' + port + "\n-----------------\n"); //tell we are ready!

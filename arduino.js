@@ -35,11 +35,11 @@ function main (){
     io.of('/arduino').on('connection', (socket) => { //on connection with webserver.js
         console.log('New connection: ' + socket.id);
         async function keepalive (){ // keep the connection alive using a message every 10 seconds
-            socket.emit('keepalive_msg', board.isReady + ' - time: ' + new Date().toLocaleString())
+            socket.emit('keepalive_msg', board.isReady + ' - time: ' + (new Date()).toLocaleString())
             setTimeout(keepalive,60000)
         } keepalive();
         socket.on('keepalive_res', function (res) {
-            console.log(res);
+            console.log('* ' + res + ' from ' + socket.id + ' *\n');
         })
 
         socket.on(`relay`, function (i) { //on 'relay' in socket, close the relay [i]

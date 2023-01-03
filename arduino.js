@@ -35,9 +35,9 @@ function main (){
     io.of('/arduino').on('connection', (socket) => { //on connection with webserver.js
         console.log('New connection: ' + socket.id);
         async function keepalive (){ // keep the connection alive using a message every 10 seconds
-            socket.emit('keepalive_msg', board.isReady + ' - time: ' + (new Date()).toLocaleString())
+            socket.emit('keepalive_msg', 'board: ' + board.isReady + ' | pin13:' + led[13].isOn + ' - time: ' + (new Date()).toLocaleString())
             setTimeout(keepalive,60000)
-        } keepalive();
+        } setTimeout(keepalive, 60000);
         socket.on('keepalive_res', function (res) {
             console.log('* ' + res + ' from ' + socket.id + ' *\n');
         })
@@ -61,6 +61,7 @@ function main (){
                     log.state_2 = led[i].isOn;
                     log.time_2 = new Date;
                     socket.emit('success', log); //let webserver.js know about the success
+                    console.log(log)
                 });
             }
         });

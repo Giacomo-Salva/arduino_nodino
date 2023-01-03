@@ -53,7 +53,6 @@ function main (){
                     state_2 : null,
                     time_2 : null
                 };
-                priv.get(this)
                 console.log(`relay:${i}` + 'chiuso\n');
                 temporal.delay(2000, function() { //wait 2 seconds
                     led[i].on();                    //open the relay giving 5V back

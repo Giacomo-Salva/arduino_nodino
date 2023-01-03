@@ -8,6 +8,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({strict: false}))
 const socket = io.connect('http://localhost:8181/arduino');// connect to arduino.js via a scoket
 
+async function successWaiting(timeLimit){
+    let timeout;
+    const timeoutPromise = new Promise((resolve) => { //return false after timeout
+        timeout = setTimeout(() => { resolve(false);}, timeLimit);
+    });
+    const ver = new Promise((resolve) => { //return true if state changed correctly, false otherwise
+        socket.on('success', (log) => {if (log.state_1 === 'off' && log.state_2 === 'off') resolve(true); else resolve(false)})
+    });
+    const response = await Promise.race([ver, timeoutPromise]);
+    if(timeout){ clearTimeout(timeout);}//the code works without this but let's be safe and clean up the timeout
+    return response;
+}
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/client/index.html')); //send index file
 });
@@ -53,31 +65,27 @@ app.get('/assets/icons',function(req, res) { //send various icons
      */
 
 });
-app.post('/command', (req, res) => { //main function for sending commands to arduino.js
+app.post('/command',async (req, res) => { //main function for sending commands to arduino.js
     const jsonReq = req.body; //gets the content of the request
 
     if (jsonReq.hasOwnProperty("relay") && typeof(jsonReq.relay) == "number" && jsonReq.hasOwnProperty("action")){ // check if request has the right content
-
         console.log("received: " , jsonReq) //show the content on server console
         const relay = jsonReq.relay;
 
         if (jsonReq.action === "open"){
-            if(relay > 0 && relay < 9){
-
+            if(relay > 0 && relay < 9) {
                 let val = relay + 4; //offset the value of relay to match the one on arduino board
-                socket.emit(`relay`,val); //send the relay and its number to arduino.js
+                socket.emit(`relay`, val); //send the relay and its number to arduino.js
                 console.log(`Sent: ${val}`, " = " + relay + " + offset(4)\n"); //show on server console what was sent to arduino
-                res.sendFile(path.join(__dirname, '/response/open_success.html')); //success msg if command was right
-
-            } else {
-                res.sendFile(path.join(__dirname, '/response/open_failure.html')) //if relay number is not right, send error msg
+                if (await successWaiting(5000)) {
+                    res.sendFile(path.join(__dirname, '/response/open_success.html')); //success msg if command was right
+                }
             }
         } else if (jsonReq.action === "delete" || jsonReq.action === "edit"){ //edit and delete options not implemented yet
             res.sendFile(path.join(__dirname, '/response/work_in_progress.html'))
         }
-    } else {
-        res.sendFile(path.join(__dirname, '/response/open_failure.html')) //if wrong command, send error msg
     }
+    res.sendFile(path.join(__dirname, '/response/open_failure.html')) //if wrong command or wrong number or waiting for success timed out, send error msg
 });
 
 socket.on('keepalive_msg', (msg) =>{

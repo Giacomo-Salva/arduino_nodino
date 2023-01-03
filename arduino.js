@@ -46,12 +46,20 @@ function main (){
             if (parseInt(i) >= 5 && parseInt(i) <= 12){ //check for right relay number
                 console.log('message received from ' + socket.id + ': relay:' + i + "\n");
                 led[i].off(); //close the relay by giving 0V
+                let log = {
+                    state_1: led[i].isOn(),
+                    time_1: new Date,
+                    state_2 : null,
+                    time_2 : null
+                };
                 temporal.delay(2000, function() { //wait 2 seconds
                     led[i].on();                    //open the relay giving 5V back
                     console.log(`relay:${i}` + 'aperto\n---\n');
+                    log.state_2 = led[i].isOn();
+                    log.time_2 = new Date;
                 });
                 console.log(`relay:${i}` + 'chiuso\n');
-                socket.emit('success'); //let webserver.js know about the success
+                socket.emit('success', log); //let webserver.js know about the success
             }
         });
     });

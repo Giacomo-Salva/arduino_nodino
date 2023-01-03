@@ -53,15 +53,15 @@ function main (){
                     state_2 : null,
                     time_2 : null
                 };
+                console.log(`relay:${i}` + 'chiuso\n');
                 temporal.delay(2000, function() { //wait 2 seconds
                     led[i].on();                    //open the relay giving 5V back
                     console.log(`relay:${i}` + 'aperto');
                     console.log('----------------------------------------\n');
                     log.state_2 = led[i].isOn();
                     log.time_2 = new Date;
+                    socket.emit('success', log); //let webserver.js know about the success
                 });
-                console.log(`relay:${i}` + 'chiuso\n');
-                socket.emit('success', log); //let webserver.js know about the success
             }
         });
     });

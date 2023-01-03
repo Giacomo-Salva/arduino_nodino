@@ -69,6 +69,7 @@ app.post('/command',async (req, res) => { //main function for sending commands t
     const jsonReq = req.body; //gets the content of the request
 
     if (jsonReq.hasOwnProperty("relay") && typeof(jsonReq.relay) == "number" && jsonReq.hasOwnProperty("action")){ // check if request has the right content
+        console.log('----------------------------------------');
         console.log("received: " , jsonReq) //show the content on server console
         const relay = jsonReq.relay;
 
@@ -76,7 +77,8 @@ app.post('/command',async (req, res) => { //main function for sending commands t
             if(relay > 0 && relay < 9) {
                 let val = relay + 4; //offset the value of relay to match the one on arduino board
                 socket.emit(`relay`, val); //send the relay and its number to arduino.js
-                console.log(`Sent: ${val}`, " = " + relay + " + offset(4)\n"); //show on server console what was sent to arduino
+                console.log(`Sent: ${val}`, " = " + relay + " + offset(4)"); //show on server console what was sent to arduino
+                console.log('----------------------------------------\n')
                 if (await successWaiting(5000)) {
                     res.sendFile(path.join(__dirname, '/response/open_success.html')); //success msg if command was right
                 }

@@ -44,6 +44,7 @@ function main (){
 
         socket.on(`relay`, function (i) { //on 'relay' in socket, close the relay [i]
             if (parseInt(i) >= 5 && parseInt(i) <= 12){ //check for right relay number
+                console.log('----------------------------------------');
                 console.log('message received from ' + socket.id + ': relay:' + i + "\n");
                 led[i].off(); //close the relay by giving 0V
                 let log = {
@@ -54,7 +55,8 @@ function main (){
                 };
                 temporal.delay(2000, function() { //wait 2 seconds
                     led[i].on();                    //open the relay giving 5V back
-                    console.log(`relay:${i}` + 'aperto\n---\n');
+                    console.log(`relay:${i}` + 'aperto');
+                    console.log('----------------------------------------\n');
                     log.state_2 = led[i].isOn();
                     log.time_2 = new Date;
                 });

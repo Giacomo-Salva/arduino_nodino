@@ -14,7 +14,8 @@ async function successWaiting(timeLimit){
         timeout = setTimeout(() => { resolve(false);}, timeLimit);
     });
     const ver = new Promise((resolve) => { //return true if state changed correctly, false otherwise
-        socket.on('success', (log) => {if (log.state_1 === 'off' && log.state_2 === 'off') resolve(true); else resolve(false)})
+        socket.on('success', (log) => {if (log.state_1 === false && log.state_2 === true) resolve(true); else resolve(false);
+            console.log(log.state_1 + ' ' + log.state_2 + ' : ' + log.time_2 - log.time_1)});
     });
     const response = await Promise.race([ver, timeoutPromise]);
     if(timeout){ clearTimeout(timeout);}//the code works without this but let's be safe and clean up the timeout

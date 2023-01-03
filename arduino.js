@@ -48,17 +48,18 @@ function main (){
                 console.log('message received from ' + socket.id + ': relay:' + i + "\n");
                 led[i].off(); //close the relay by giving 0V
                 let log = {
-                    state_1: led[i].isOn(),
+                    state_1: led[i].isOn,
                     time_1: new Date,
                     state_2 : null,
                     time_2 : null
                 };
+                priv.get(this)
                 console.log(`relay:${i}` + 'chiuso\n');
                 temporal.delay(2000, function() { //wait 2 seconds
                     led[i].on();                    //open the relay giving 5V back
                     console.log(`relay:${i}` + 'aperto');
                     console.log('----------------------------------------\n');
-                    log.state_2 = led[i].isOn();
+                    log.state_2 = led[i].isOn;
                     log.time_2 = new Date;
                     socket.emit('success', log); //let webserver.js know about the success
                 });

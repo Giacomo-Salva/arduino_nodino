@@ -76,20 +76,20 @@ app.post('/command',async (req, res) => { //main function for sending commands t
         const relay = jsonReq.relay;
 
         if (jsonReq.action === "open"){
-            if(relay > 0 && relay < 9) {
+            if(relay > 0 && relay < 9) {// ------- should move socket.emit inside the successWaiting() ---------
                 let val = relay + 4; //offset the value of relay to match the one on arduino board
                 socket.emit(`relay`, val); //send the relay and its number to arduino.js
                 console.log(`Sent: ${val}`, " = " + relay + " + offset(4) | " + (new Date).toLocaleString()); //show on server console what was sent to arduino
                 console.log('----------------------------------------\n')
                 if (await successWaiting(5000)) {
                     res.sendFile(path.join(__dirname, '/response/open_success.html')); //success msg if command was right
-                }
-            }
+
+                } else res.sendFile(path.join(__dirname, '/response/open_failure.html'));
+            } else res.sendFile(path.join(__dirname, '/response/open_failure.html'));
         } else if (jsonReq.action === "delete" || jsonReq.action === "edit"){ //edit and delete options not implemented yet
             res.sendFile(path.join(__dirname, '/response/work_in_progress.html'))
-        }
-    }
-    res.sendFile(path.join(__dirname, '/response/open_failure.html')) //if wrong command or wrong number or waiting for success timed out, send error msg
+        } else res.sendFile(path.join(__dirname, '/response/open_failure.html'));
+    } else res.sendFile(path.join(__dirname, '/response/open_failure.html'));//if wrong command or wrong number or waiting for success timed out, send error msg
 });
 
 socket.on('keepalive_msg', (msg) =>{

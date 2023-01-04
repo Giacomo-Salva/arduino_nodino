@@ -1,3 +1,4 @@
+let open_info = '<div style="margin: auto; width: 100%" class="alert alert-info" role="alert">Invio comando in corso...</div>'
 function openCommand(id) { //function called when command button is pressed and sends the relative command to the webserver
     let xhrFun = new XMLHttpRequest();
     if(id.split("_")[0] === "open"){
@@ -10,10 +11,13 @@ function openCommand(id) { //function called when command button is pressed and 
         xhrFun.setRequestHeader("Content-type", "application/json");
         xhrFun.send(JSON.stringify(data_json));
         console.log("sent" + JSON.stringify(data_json))
+        document.getElementById("alert_container").innerHTML = open_info;   // lets the user know if command was successfully sent
+        setTimeout(function () {document.getElementById("alert_container").innerHTML = "";}, 2000);
 
         xhrFun.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                document.getElementById("alert_container").innerHTML = this.responseText;   // lets the user know if command was successfully sent
+                console.log(this.responseText)
+                document.getElementById("alert_container").innerHTML = this.responseText;   // lets the user know if command was successfully executed (or if error occurred)
                 setTimeout(function () {document.getElementById("alert_container").innerHTML = "";}, 2000);
             }
         }

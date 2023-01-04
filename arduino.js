@@ -1,5 +1,4 @@
 const five = require('johnny-five');
-const temporal = require("temporal");
 const express = require('express');
 
 function main (){
@@ -54,7 +53,7 @@ function main (){
                     time_2 : null
                 };
                 console.log(`relay:${i}` + 'chiuso\n');
-                temporal.delay(2000, function() { //wait 2 seconds
+                setTimeout(function() { //wait 2 seconds
                     led[i].on();                    //open the relay giving 5V back
                     console.log(`relay:${i}` + 'aperto');
                     console.log('----------------------------------------\n');
@@ -62,7 +61,7 @@ function main (){
                     log.time_2 = new Date;
                     socket.emit('success', log); //let webserver.js know about the success
                     console.log(log)
-                });
+                }, 2000);
             }
         });
     });

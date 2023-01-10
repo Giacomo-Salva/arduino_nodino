@@ -1,5 +1,4 @@
 const five = require('johnny-five');
-const temporal = require("temporal");
 const express = require('express');
 
 function main (){
@@ -35,23 +34,34 @@ function main (){
     io.of('/arduino').on('connection', (socket) => { //on connection with webserver.js
         console.log('New connection: ' + socket.id);
         async function keepalive (){ // keep the connection alive using a message every 10 seconds
-            socket.emit('keepalive_msg', board.isReady + ' - time: ' + (new Date()).toLocaleString())
+            socket.emit('keepalive_msg', 'board: ' + board.isReady + ' | pin13:' + led[13].isOn + ' - time: ' + (new Date()).toLocaleString())
             setTimeout(keepalive,60000)
-        } keepalive();
+        } setTimeout(keepalive, 60000);
         socket.on('keepalive_res', function (res) {
             console.log('* ' + res + ' from ' + socket.id + ' *\n');
         })
 
         socket.on(`relay`, function (i) { //on 'relay' in socket, close the relay [i]
             if (parseInt(i) >= 5 && parseInt(i) <= 12){ //check for right relay number
+                console.log('----------------------------------------');
                 console.log('message received from ' + socket.id + ': relay:' + i + "\n");
                 led[i].off(); //close the relay by giving 0V
-                temporal.delay(2000, function() { //wait 2 seconds
-                    led[i].on();                    //open the relay giving 5V back
-                    console.log(`relay:${i}` + 'aperto\n---\n');
-                });
+                let log = {
+                    state_1: led[i].isOn,
+                    time_1: new Date,
+                    state_2 : null,
+                    time_2 : null
+                };
                 console.log(`relay:${i}` + 'chiuso\n');
-                socket.emit('success'); //let webserver.js know about the success
+                setTimeout(function() { //wait 2 seconds
+                    led[i].on();                    //open the relay giving 5V back
+                    console.log(`relay:${i}` + 'aperto');
+                    console.log('----------------------------------------\n');
+                    log.state_2 = led[i].isOn;
+                    log.time_2 = new Date;
+                    socket.emit('success', log); //let webserver.js know about the success
+                    console.log(log)
+                }, 2000);
             }
         });
     });
